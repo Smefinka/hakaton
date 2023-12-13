@@ -1,0 +1,64 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+.body {
+  background-color: #f9f9f9;
+}
+
+header {
+  width: 375px;
+  background-color: #002902;
+  color: white;
+  height: 116px;
+
+  --mask: radial-gradient(
+        62.61px at 50% calc(100% - 84px),
+        #000 99%,
+        #0000 101%
+      )
+      calc(50% - 56px) 0/112px 100%,
+    radial-gradient(62.61px at 50% calc(100% + 56px), #0000 99%, #000 101%) 50%
+      calc(100% - 28px) / 112px 100% repeat-x;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+
+  display: flex;
+  justify-content: center;
+}
+h1 {
+  font-family: Barrio;
+  font-size: 42px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+}
+h2 {
+  font-family: Barriecito;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 80% */
+
+  margin: 0;
+}
+nav {
+  color: #002902;
+}
+
+.buttonHeader {
+  height: 36px;
+  width: 80px;
+  border-radius: 4px;
+  padding: 10px 12px;
+  border: 1px solid #d6d6d6;
+  background: #fff;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+}

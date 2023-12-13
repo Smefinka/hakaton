@@ -1,0 +1,11 @@
+@use '/src/scss/abstracts/' as *;
+.button {
+  display: flex;
+  margin: 0;
+  padding: 8px;
+  border-radius: 52px;
+  background-color: $gray;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+}

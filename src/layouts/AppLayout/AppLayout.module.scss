@@ -1,0 +1,16 @@
+@use '/src/scss/abstracts/' as *;
+
+.layout {
+  max-width: 375px;
+  height: 755px;
+  margin: 1% auto;
+  background: $white;
+}
+h3 {
+  color: $green;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+}
