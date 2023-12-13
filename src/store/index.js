@@ -1,20 +1,32 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { configureStore, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import generateDough from '../API/index-api';
-
-
-
 const inputsAnswers = {
     'Ciasto': '',
     'Nadzienie': '',
     'Składniki': ''
 }
 const valueInputs = ['Ciasto','Nadzienie', 'Składniki']
+export const fetchTo = createAsyncThunk(
+    'fetchTo/items',
+    async (_, thunkAPI) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            console.log('hi');
+            resolve(inputsAnswers);
+          }, 1500);
+        });
+      }
+)
+
+
 const inputSlice = createSlice({
     name: 'input',
     initialState: {
         items: [],
         buttonLock: true,
-        valueInputsShallowCopy: []
+        valueInputsShallowCopy: [],
+        status: null,
+        error: null
     },
     reducers: {
         // deleteItem(state, action){
@@ -44,7 +56,7 @@ const inputSlice = createSlice({
         }
         ,
         getItems(state, action){
-            state.items = [];
+            // state.items = [];
             if(state.valueInputsShallowCopy.length>0){
                 state.valueInputsShallowCopy.forEach((value)=> {
                     generateDough(value).then(result => {
@@ -65,8 +77,8 @@ const inputSlice = createSlice({
                })  
             }
            
-           let b = JSON.stringify(inputsAnswers)
-            state.items.push(b)
+        //    let b = JSON.stringify(inputsAnswers)
+        //     state.items.push(b)
 
         },
         setIsInputsLocked(state, action){
@@ -80,27 +92,44 @@ const inputSlice = createSlice({
                 state.valueInputsShallowCopy = [...state.valueInputsShallowCopy,...newArr];
                 
             }else if (state.valueInputsShallowCopy.includes(action.payload.name)){
-                console.log('i am exists!')
+                
                 let nameIndex = state.valueInputsShallowCopy.indexOf(action.payload.name);
            state.valueInputsShallowCopy.splice(nameIndex,1);
-                console.log(state.valueInputsShallowCopy)
+               
             }else{
-                console.log('hi!')
+          
                 state.valueInputsShallowCopy = [...state.valueInputsShallowCopy, action.payload.name]
             }
-            // console.log(action.payload.name)
-            console.log(state.valueInputsShallowCopy.length)
-            // if(state.valueInputsShallowCopy.length>1){
-            //     console.log('hi')
-            //     state.valueInputsShallowCopy.splice(0, 1)
-            // }
-           // state.buttonLock = action.payload
+            
         },
         setIsInputsUnLocked(state, action){
             state.valueInputsShallowCopy = [...state.valueInputsShallowCopy, action.payload.name]
            console.log('add element')
         }
 
+    },
+    extraReducers:(builder) => {
+        builder 
+        .addCase(fetchTo.pending, (state, action) => {
+            state.status = "loading";
+            console.log('loading')
+            
+          })
+        .addCase(fetchTo.fulfilled, (state,action) => {
+            state.items =[]
+            state.status = "fulfilled";
+            console.log('fulfilled')
+            console.log(action.payload)
+          let b = JSON.stringify(action.payload);
+           console.log(b)
+           let v=[];
+           v.push(b)
+           console.log(JSON.parse(v))
+           state.items.push(b);
+           console.log( state.items)
+          })
+
+       
     }
 })
 

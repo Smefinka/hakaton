@@ -8,6 +8,7 @@ function SectionContent() {
   const inputsDescription = useSelector(state => state.inputs.items);
  //проверка не пустое ли оно (и оно не пустое..)
   if(inputsDescription.length > 0){
+    console.log(inputsDescription)
   objInputs =  JSON.parse(inputsDescription);
  }
  

@@ -2,11 +2,13 @@ import React from 'react'
 import PierogIcon from '@icons/Pierog.svg?react'
 import Button from '../../../components/Button/Button'
 import { useSelector, useDispatch } from 'react-redux';
-import { inputsActions } from '../../../store/index';
+import { inputsActions, fetchTo } from '../../../store/index';
 export const NavComponent = ({ title }) => {
   const dispatch = useDispatch();
   const handleClick = () =>{
-  dispatch(inputsActions.getItems())
+
+ dispatch(inputsActions.getItems())
+ dispatch(fetchTo())
   }
   const handleClickRegenarate = () =>{
     dispatch(inputsActions.regenarateItems())
