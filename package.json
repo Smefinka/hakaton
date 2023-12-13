@@ -1,9 +1,9 @@
 {
-  "name": "pierogator-app",
+  "name": "hakaton",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "author": "Nerdbord",
+  "author": "",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

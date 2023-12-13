@@ -1,7 +1,7 @@
 import './App.css'
 import Header from './layouts/AppHeader/Header/Header'
 import SectionContent from './layouts/InputsSection/SectionContent'
-import { AppLayout } from './layouts/AppLayout/Applayout'
+import  AppLayout from './layouts/AppLayout/Applayout.jsx'
 import { ImageSection } from './layouts/ImageSection/ImageSection'
 
 function App() {
