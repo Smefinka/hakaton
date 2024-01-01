@@ -1,4 +1,9 @@
 import styles from './AppLayout.module.scss'
-export const AppLayout = ({ children }) => (
-  <div className={styles.layout}>{children}</div>
-)
+function AppLayout ({ children }){
+  return (
+   <>
+   <div className={styles.layout}>{children}</div>
+   </>
+   
+ )}
+ export default AppLayout;
