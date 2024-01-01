@@ -1,5 +1,4 @@
 import './App.css'
-import AppLayout from './layouts/AppLayout/Applayout'
 import styles from './layouts/AppLayout/AppLayout.module.scss'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./pages/Root";
