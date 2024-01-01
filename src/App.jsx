@@ -1,5 +1,6 @@
 import './App.css'
 import AppLayout from './layouts/AppLayout/Applayout'
+import styles from './layouts/AppLayout/AppLayout.module.scss'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./pages/Root";
 import Home from './pages/Home';
@@ -27,10 +28,10 @@ const router = createBrowserRouter([
 ])
 function App() {
   return (
-    <AppLayout>
+    <div className={styles.layout}>
      <RouterProvider router={router} />
 
-    </AppLayout>
+    </div>
   )
 }
 
