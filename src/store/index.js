@@ -1,21 +1,21 @@
 import { configureStore, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import generateDough from '../API/index-api';
+import { recipesSlice } from './recipesSlice';
 const inputsAnswers = {
     'Ciasto': '',
     'Nadzienie': '',
     'Składniki': ''
 }
-const valueInputs = ['Ciasto','Nadzienie', 'Składniki']
+const valueInputs = ['Ciasto', 'Nadzienie', 'Składniki']
 export const fetchTo = createAsyncThunk(
     'fetchTo/items',
     async (_, thunkAPI) => {
         return new Promise(resolve => {
-          setTimeout(() => {
-            console.log('hi');
-            resolve(inputsAnswers);
-          }, 1500);
+            setTimeout(() => {
+                resolve(inputsAnswers);
+            }, 1800);
         });
-      }
+    }
 )
 
 
@@ -24,119 +24,96 @@ const inputSlice = createSlice({
     initialState: {
         items: [],
         buttonLock: true,
+        sectionImage: false,
         valueInputsShallowCopy: [],
         status: null,
-        error: null
+        error: null,
+        isLoading: null
     },
     reducers: {
-        // deleteItem(state, action){
-        //     const delItemID = +action.payload;
-        //     const updatedItems = state.items.filter(item => item.id !== delItemID);
-        //     state.items = updatedItems;
-        // },
-        fisrtLoadItems(state, action){
-            valueInputs.forEach((value)=> {
-                generateDough(value).then(result => {
-                 
-                   inputsAnswers[value] = result
-               });
-            //   state.items = [...state.items,inputsAnswers
-           }) 
-        },
-        regenarateItems(state, action){
-            state.items = [];
-            
-            valueInputs.forEach((value)=> {
-                 generateDough(value).then(result => {
-                    inputsAnswers[value] = result
-                });
-            })  
-           let regenarateItemsString = JSON.stringify(inputsAnswers)
-            state.items.push(regenarateItemsString)
-        }
-        ,
-        getItems(state, action){
+        getItems(state, action) {
             // state.items = [];
-            if(state.valueInputsShallowCopy.length>0){
-                state.valueInputsShallowCopy.forEach((value)=> {
+            if (state.valueInputsShallowCopy.length > 0) {
+                state.valueInputsShallowCopy.forEach((value) => {
                     generateDough(value).then(result => {
-                       console.log(result); // Use the result directly
-                       inputsAnswers[value] = result
-                    console.log('shallow only get')
-                   });
-               }) 
-            }else{
-
-                valueInputs.forEach((value)=> {
+                        inputsAnswers[value] = result
+                    });
+                })
+               
+            } else {
+                valueInputs.forEach((value) => {
                     generateDough(value).then(result => {
-                       console.log(result); // Use the result directly
-                       inputsAnswers[value] = result
-                    //    console.log('inputsAnswers')
-                    //    console.log(inputsAnswers)
-                   });
-               })  
+                        if(!!inputsAnswers[value] !== true){
+                            inputsAnswers[value] = result
+                           }
+                    });
+                })
             }
-           
-        //    let b = JSON.stringify(inputsAnswers)
-        //     state.items.push(b)
-
         },
-        setIsInputsLocked(state, action){
-            if( state.valueInputsShallowCopy.length === 0){
-               
-                let newArr = valueInputs.filter((e)=> {
-                    console.log(e !== action.payload.name)
-                    return  e !== action.payload.name
+        setIsInputsLocked(state, action) {
+            console.log('locked')
+            state.items = [];
+             //first try when all block 24.12 17:58
+             let b = JSON.stringify(inputsAnswers);
+             state.items.push(b);
+//end
+            if (state.valueInputsShallowCopy.length === 0) {
+                let newArr = valueInputs.filter((e) => {
+                    return e !== action.payload.name
                 });
-               
-                state.valueInputsShallowCopy = [...state.valueInputsShallowCopy,...newArr];
-                
-            }else if (state.valueInputsShallowCopy.includes(action.payload.name)){
-                
+
+                state.valueInputsShallowCopy = [...state.valueInputsShallowCopy, ...newArr];
+
+            } else if (state.valueInputsShallowCopy.includes(action.payload.name)) {
                 let nameIndex = state.valueInputsShallowCopy.indexOf(action.payload.name);
-           state.valueInputsShallowCopy.splice(nameIndex,1);
-               
-            }else{
-          
+                state.valueInputsShallowCopy.splice(nameIndex, 1);
+
+            } else {
                 state.valueInputsShallowCopy = [...state.valueInputsShallowCopy, action.payload.name]
             }
-            
+
         },
-        setIsInputsUnLocked(state, action){
+        setIsInputsUnLocked(state, action) {
             state.valueInputsShallowCopy = [...state.valueInputsShallowCopy, action.payload.name]
-           console.log('add element')
+        },
+        getDescription(state,action){
+            inputsAnswers[action.payload.name] = action.payload.description;
+        },
+        allLockedInputs(state,action){
+            state.items.push(JSON.stringify(inputsAnswers))
+        },
+        showImageSection(state,action){
+            state.sectionImage = true;
+        },
+        hideImageSection(state,action){
+            state.sectionImage = false;
         }
 
     },
-    extraReducers:(builder) => {
-        builder 
-        .addCase(fetchTo.pending, (state, action) => {
-            state.status = "loading";
-            console.log('loading')
-            
-          })
-        .addCase(fetchTo.fulfilled, (state,action) => {
-            state.items =[]
-            state.status = "fulfilled";
-            console.log('fulfilled')
-            console.log(action.payload)
-          let b = JSON.stringify(action.payload);
-           console.log(b)
-           let v=[];
-           v.push(b)
-           console.log(JSON.parse(v))
-           state.items.push(b);
-           console.log( state.items)
-          })
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchTo.pending, (state, action) => {
+                state.status = "loading";
+                state.isLoading = true;
+            })
+            .addCase(fetchTo.fulfilled, (state, action) => {
+                state.items = []
+                state.status = "fulfilled";
+                let b = JSON.stringify(action.payload);
+                state.items.push(b);
+                state.isLoading = false;
+            })
 
-       
+
     }
 })
 
 const store = configureStore({
     reducer: {
         inputs: inputSlice.reducer,
+        recipe: recipesSlice.reducer
     }
 });
 export const inputsActions = inputSlice.actions;
+export const recipeActions = recipesSlice.actions
 export default store;

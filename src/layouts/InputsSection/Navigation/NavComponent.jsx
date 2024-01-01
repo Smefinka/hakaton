@@ -1,18 +1,13 @@
 import React from 'react'
 import PierogIcon from '@icons/Pierog.svg?react'
-import Button from '../../../components/Button/Button'
-import { useSelector, useDispatch } from 'react-redux';
-import { inputsActions, fetchTo } from '../../../store/index';
-export const NavComponent = ({ title }) => {
-  const dispatch = useDispatch();
-  const handleClick = () =>{
-
- dispatch(inputsActions.getItems())
- dispatch(fetchTo())
-  }
-  const handleClickRegenarate = () =>{
-    dispatch(inputsActions.regenarateItems())
-    }
+import styles from './NavComponent.module.scss'
+import Loader from '../../../components/Loader/Loader'
+export const NavComponent = ({
+  title,
+  onClickFunction,
+  buttonText,
+  isLoading,
+}) => {
   return (
     <nav
       style={{
@@ -26,9 +21,15 @@ export const NavComponent = ({ title }) => {
         <PierogIcon />
         <h2 style={{ paddingLeft: '8px' }}>{title}</h2>
       </div>
+      {isLoading ? <Loader /> : null}
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-      <Button ><span onClick={handleClickRegenarate}>Regenerate</span></Button>
-        <Button ><span onClick={handleClick}>Generuj</span></Button>
+        <button
+          className={styles.buttonHeader}
+          onClick={onClickFunction}
+          disabled={isLoading}
+        >
+          {buttonText}
+        </button>
       </div>
     </nav>
   )

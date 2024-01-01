@@ -1,0 +1,15 @@
+@use '/src/scss/abstracts/' as *;
+.buttonHeader {
+    height: 48px;
+    color: $white;
+    width: 343px;
+    border-radius: 4px;
+    padding: 10px 12px;
+    border: 1px solid #d6d6d6;
+    background: $dark-green;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+  }

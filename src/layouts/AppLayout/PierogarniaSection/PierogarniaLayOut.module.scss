@@ -1,0 +1,30 @@
+@use '/src/scss/abstracts/' as *;
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+.listContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.itemContainer{
+    max-width: 162px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #002902;
+}
+.imageContainer{
+    object-fit: cover;
+    border-radius: 4px
+}
+.containerName{
+    max-width: 162px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #002902;
+}

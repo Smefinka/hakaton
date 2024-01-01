@@ -4,7 +4,7 @@ import axios from 'axios'
 const useChatGPT = () => {
 const [generatedText, setGeneratedText] = useState('')
 
-async function  generateDough (name) {
+async function  generateDoughNew (name) {
     try {
       const response = await axios.post(
         'https://training.nerdbord.io/api/v1/openai/chat/completions',
@@ -26,15 +26,16 @@ async function  generateDough (name) {
           },
         }
       )
-      console.log(name.name)
-    setGeneratedText(response.data.choices[0].message.content)
+      const contentData = await response.data.choices[0].message.content;
+      console.log(name.name) 
+    setGeneratedText(contentData)
     } catch (error) {
       console.error('Error generating :', error)
     }
   }
  
 
-  return { generatedText, generateDough };
+  return { generatedText, generateDoughNew};
 }
 
 
