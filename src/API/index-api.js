@@ -7,7 +7,7 @@ async function generateDough(name) {
       {
         model: 'gpt-3.5-turbo',
         messages: [
-          { role: 'system', content: 'You are a helpful assistant.' },
+          { role: 'system', content: 'You are a helpful assistant. ' },
           {
             role: 'user',
             content: `Zgeneruj 4 randomowe skladniki do ${name}. Pisz tylko listę składników`,
